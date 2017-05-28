@@ -1,4 +1,5 @@
 """Low-level http related exceptions."""
+from http import HTTPStatus
 
 __all__ = ('HttpProcessingError',)
 
@@ -19,7 +20,8 @@ class HttpProcessingError(Exception):
 
     def __init__(self, *, code=None, message='', headers=None):
         if code is not None:
-            self.code = code
+            self.code = \
+                code if isinstance(code, HTTPStatus) else HTTPStatus(code)
         self.headers = headers
         self.message = message
 
@@ -28,7 +30,7 @@ class HttpProcessingError(Exception):
 
 class BadHttpMessage(HttpProcessingError):
 
-    code = 400
+    code = HTTPStatus.BAD_REQUEST
     message = 'Bad Request'
 
     def __init__(self, message, *, headers=None):
@@ -37,7 +39,7 @@ class BadHttpMessage(HttpProcessingError):
 
 class HttpBadRequest(BadHttpMessage):
 
-    code = 400
+    code = HTTPStatus.BAD_REQUEST
     message = 'Bad Request'
 
 

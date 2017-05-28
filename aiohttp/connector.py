@@ -6,6 +6,7 @@ import traceback
 import warnings
 from collections import defaultdict
 from hashlib import md5, sha1, sha256
+from http import HTTPStatus
 from itertools import cycle, islice
 from time import monotonic
 from types import MappingProxyType
@@ -783,7 +784,7 @@ class TCPConnector(BaseConnector):
                 conn._protocol = None
                 conn._transport = None
                 try:
-                    if resp.status != 200:
+                    if resp.status != HTTPStatus.OK:
                         raise ClientHttpProxyError(
                             proxy_resp.request_info,
                             resp.history,

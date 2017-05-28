@@ -6,6 +6,7 @@ import math
 import time
 import warnings
 from email.utils import parsedate
+from http import HTTPStatus
 
 from multidict import CIMultiDict, CIMultiDictProxy
 
@@ -36,7 +37,7 @@ class StreamResponse(HeadersMixin):
 
     _length_check = True
 
-    def __init__(self, *, status=200, reason=None, headers=None):
+    def __init__(self, *, status=HTTPStatus.OK, reason=None, headers=None):
         self._body = None
         self._keep_alive = None
         self._chunked = False
@@ -84,7 +85,15 @@ class StreamResponse(HeadersMixin):
         assert not self.prepared, \
             'Cannot change the response status code after ' \
             'the headers have been sent'
-        self._status = int(status)
+        if not isinstance(status, HTTPStatus):
+            try:
+                self._status = HTTPStatus(int(status))
+            except ValueError:
+                self._status = int(status)
+        else:
+            self._status = status
+            self._reason = status.phrase
+
         if reason is None:
             try:
                 reason = _RESPONSES[self._status][0]

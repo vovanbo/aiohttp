@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 from .web_response import Response
 
 
@@ -97,33 +99,33 @@ class HTTPSuccessful(HTTPException):
 
 
 class HTTPOk(HTTPSuccessful):
-    status_code = 200
+    status_code = HTTPStatus.OK
 
 
 class HTTPCreated(HTTPSuccessful):
-    status_code = 201
+    status_code = HTTPStatus.CREATED
 
 
 class HTTPAccepted(HTTPSuccessful):
-    status_code = 202
+    status_code = HTTPStatus.ACCEPTED
 
 
 class HTTPNonAuthoritativeInformation(HTTPSuccessful):
-    status_code = 203
+    status_code = HTTPStatus.NON_AUTHORITATIVE_INFORMATION
 
 
 class HTTPNoContent(HTTPSuccessful):
-    status_code = 204
+    status_code = HTTPStatus.NO_CONTENT
     empty_body = True
 
 
 class HTTPResetContent(HTTPSuccessful):
-    status_code = 205
+    status_code = HTTPStatus.RESET_CONTENT
     empty_body = True
 
 
 class HTTPPartialContent(HTTPSuccessful):
-    status_code = 206
+    status_code = HTTPStatus.PARTIAL_CONTENT
 
 
 ############################################################
@@ -144,40 +146,40 @@ class _HTTPMove(HTTPRedirection):
 
 
 class HTTPMultipleChoices(_HTTPMove):
-    status_code = 300
+    status_code = HTTPStatus.MULTIPLE_CHOICES
 
 
 class HTTPMovedPermanently(_HTTPMove):
-    status_code = 301
+    status_code = HTTPStatus.MOVED_PERMANENTLY
 
 
 class HTTPFound(_HTTPMove):
-    status_code = 302
+    status_code = HTTPStatus.FOUND
 
 
 # This one is safe after a POST (the redirected location will be
 # retrieved with GET):
 class HTTPSeeOther(_HTTPMove):
-    status_code = 303
+    status_code = HTTPStatus.SEE_OTHER
 
 
 class HTTPNotModified(HTTPRedirection):
     # FIXME: this should include a date or etag header
-    status_code = 304
+    status_code = HTTPStatus.NOT_MODIFIED
     empty_body = True
 
 
 class HTTPUseProxy(_HTTPMove):
     # Not a move, but looks a little like one
-    status_code = 305
+    status_code = HTTPStatus.USE_PROXY
 
 
 class HTTPTemporaryRedirect(_HTTPMove):
-    status_code = 307
+    status_code = HTTPStatus.TEMPORARY_REDIRECT
 
 
 class HTTPPermanentRedirect(_HTTPMove):
-    status_code = 308
+    status_code = HTTPStatus.PERMANENT_REDIRECT
 
 
 ############################################################
@@ -190,27 +192,27 @@ class HTTPClientError(HTTPError):
 
 
 class HTTPBadRequest(HTTPClientError):
-    status_code = 400
+    status_code = HTTPStatus.BAD_REQUEST
 
 
 class HTTPUnauthorized(HTTPClientError):
-    status_code = 401
+    status_code = HTTPStatus.UNAUTHORIZED
 
 
 class HTTPPaymentRequired(HTTPClientError):
-    status_code = 402
+    status_code = HTTPStatus.PAYMENT_REQUIRED
 
 
 class HTTPForbidden(HTTPClientError):
-    status_code = 403
+    status_code = HTTPStatus.FORBIDDEN
 
 
 class HTTPNotFound(HTTPClientError):
-    status_code = 404
+    status_code = HTTPStatus.NOT_FOUND
 
 
 class HTTPMethodNotAllowed(HTTPClientError):
-    status_code = 405
+    status_code = HTTPStatus.METHOD_NOT_ALLOWED
 
     def __init__(self, method, allowed_methods, *, headers=None, reason=None,
                  body=None, text=None, content_type=None):
@@ -223,51 +225,51 @@ class HTTPMethodNotAllowed(HTTPClientError):
 
 
 class HTTPNotAcceptable(HTTPClientError):
-    status_code = 406
+    status_code = HTTPStatus.NOT_ACCEPTABLE
 
 
 class HTTPProxyAuthenticationRequired(HTTPClientError):
-    status_code = 407
+    status_code = HTTPStatus.PROXY_AUTHENTICATION_REQUIRED
 
 
 class HTTPRequestTimeout(HTTPClientError):
-    status_code = 408
+    status_code = HTTPStatus.REQUEST_TIMEOUT
 
 
 class HTTPConflict(HTTPClientError):
-    status_code = 409
+    status_code = HTTPStatus.CONFLICT
 
 
 class HTTPGone(HTTPClientError):
-    status_code = 410
+    status_code = HTTPStatus.GONE
 
 
 class HTTPLengthRequired(HTTPClientError):
-    status_code = 411
+    status_code = HTTPStatus.LENGTH_REQUIRED
 
 
 class HTTPPreconditionFailed(HTTPClientError):
-    status_code = 412
+    status_code = HTTPStatus.PRECONDITION_FAILED
 
 
 class HTTPRequestEntityTooLarge(HTTPClientError):
-    status_code = 413
+    status_code = HTTPStatus.REQUEST_ENTITY_TOO_LARGE
 
 
 class HTTPRequestURITooLong(HTTPClientError):
-    status_code = 414
+    status_code = HTTPStatus.REQUEST_URI_TOO_LONG
 
 
 class HTTPUnsupportedMediaType(HTTPClientError):
-    status_code = 415
+    status_code = HTTPStatus.UNSUPPORTED_MEDIA_TYPE
 
 
 class HTTPRequestRangeNotSatisfiable(HTTPClientError):
-    status_code = 416
+    status_code = HTTPStatus.REQUESTED_RANGE_NOT_SATISFIABLE
 
 
 class HTTPExpectationFailed(HTTPClientError):
-    status_code = 417
+    status_code = HTTPStatus.EXPECTATION_FAILED
 
 
 class HTTPMisdirectedRequest(HTTPClientError):
@@ -275,27 +277,27 @@ class HTTPMisdirectedRequest(HTTPClientError):
 
 
 class HTTPUnprocessableEntity(HTTPClientError):
-    status_code = 422
+    status_code = HTTPStatus.UNPROCESSABLE_ENTITY
 
 
 class HTTPFailedDependency(HTTPClientError):
-    status_code = 424
+    status_code = HTTPStatus.FAILED_DEPENDENCY
 
 
 class HTTPUpgradeRequired(HTTPClientError):
-    status_code = 426
+    status_code = HTTPStatus.UPGRADE_REQUIRED
 
 
 class HTTPPreconditionRequired(HTTPClientError):
-    status_code = 428
+    status_code = HTTPStatus.PRECONDITION_REQUIRED
 
 
 class HTTPTooManyRequests(HTTPClientError):
-    status_code = 429
+    status_code = HTTPStatus.TOO_MANY_REQUESTS
 
 
 class HTTPRequestHeaderFieldsTooLarge(HTTPClientError):
-    status_code = 431
+    status_code = HTTPStatus.REQUEST_HEADER_FIELDS_TOO_LARGE
 
 
 class HTTPUnavailableForLegalReasons(HTTPClientError):
@@ -326,40 +328,40 @@ class HTTPServerError(HTTPError):
 
 
 class HTTPInternalServerError(HTTPServerError):
-    status_code = 500
+    status_code = HTTPStatus.INTERNAL_SERVER_ERROR
 
 
 class HTTPNotImplemented(HTTPServerError):
-    status_code = 501
+    status_code = HTTPStatus.NOT_IMPLEMENTED
 
 
 class HTTPBadGateway(HTTPServerError):
-    status_code = 502
+    status_code = HTTPStatus.BAD_GATEWAY
 
 
 class HTTPServiceUnavailable(HTTPServerError):
-    status_code = 503
+    status_code = HTTPStatus.SERVICE_UNAVAILABLE
 
 
 class HTTPGatewayTimeout(HTTPServerError):
-    status_code = 504
+    status_code = HTTPStatus.GATEWAY_TIMEOUT
 
 
 class HTTPVersionNotSupported(HTTPServerError):
-    status_code = 505
+    status_code = HTTPStatus.HTTP_VERSION_NOT_SUPPORTED
 
 
 class HTTPVariantAlsoNegotiates(HTTPServerError):
-    status_code = 506
+    status_code = HTTPStatus.VARIANT_ALSO_NEGOTIATES
 
 
 class HTTPInsufficientStorage(HTTPServerError):
-    status_code = 507
+    status_code = HTTPStatus.INSUFFICIENT_STORAGE
 
 
 class HTTPNotExtended(HTTPServerError):
-    status_code = 510
+    status_code = HTTPStatus.NOT_EXTENDED
 
 
 class HTTPNetworkAuthenticationRequired(HTTPServerError):
-    status_code = 511
+    status_code = HTTPStatus.NETWORK_AUTHENTICATION_REQUIRED
