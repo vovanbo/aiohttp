@@ -199,3 +199,6 @@ period ask to raise he status.
 
 - `aiohttp-graphql <https://github.com/graphql-python/aiohttp-graphql>`_
   GraphQL and GraphIQL interface for aiohttp.
+
+- `aiohttp_json_api <https://github.com/vovanbo/aiohttp_json_api>`_
+  Implementation of `JSON API <http://jsonapi.org>`_ for aiohttp.
